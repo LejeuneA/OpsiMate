@@ -4,6 +4,7 @@ import { CommentItem } from '@/components/Alerts/AlertDetails/CommentsWall/Comme
 import { AlertDetailsHeader } from '@/components/Alerts/AlertDetails/AlertDetailsHeader';
 import { DashboardRow } from '@/components/Dashboards/DashboardRow';
 import { DashboardWithFavorite } from '@/components/Dashboards/Dashboards.types';
+import { LeftSidebar } from '@/components/LeftSidebar';
 import { render, screen } from './test-utils';
 
 const comment: AlertComment = {
@@ -70,5 +71,21 @@ describe('icon-only button accessible names', () => {
 
 		expect(screen.getByRole('button', { name: label })).toBeInTheDocument();
 		expect(screen.getByRole('button', { name: 'Delete dashboard' })).toBeInTheDocument();
+	});
+});
+
+describe('sidebar community link accessibility', () => {
+	test('renders Slack and GitHub actions as accessible links', () => {
+		render(<LeftSidebar collapsed={false} />);
+
+		expect(screen.getByRole('link', { name: 'Join our Slack' })).toHaveAttribute(
+			'href',
+			'https://join.slack.com/t/opsimate/shared_invite/zt-39bq3x6et-NrVCZzH7xuBGIXmOjJM7gA'
+		);
+
+		expect(screen.getByRole('link', { name: 'Star us on GitHub' })).toHaveAttribute(
+			'href',
+			'https://github.com/opsimate/opsimate'
+		);
 	});
 });
